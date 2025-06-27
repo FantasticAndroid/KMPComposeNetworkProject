@@ -1,42 +1,78 @@
 package com.first.network
 
-import androidx.compose.animation.AnimatedVisibility
-import androidx.compose.foundation.Image
+import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.safeContentPadding
+import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
 import androidx.compose.material3.Button
+import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
+import androidx.compose.material3.TextField
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import org.jetbrains.compose.resources.painterResource
+import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.unit.dp
+import androidx.lifecycle.viewmodel.compose.viewModel
 import org.jetbrains.compose.ui.tooling.preview.Preview
 
-import firstnetworkproject.composeapp.generated.resources.Res
-import firstnetworkproject.composeapp.generated.resources.compose_multiplatform
+import kotlinx.coroutines.launch
 
 @Composable
 @Preview
 fun App() {
+    val censorViewModel = viewModel{
+        CensorViewModel()
+    }
     MaterialTheme {
-        var showContent by remember { mutableStateOf(false) }
+
+        val uiState by censorViewModel.uiState
+        var uncensoredText by remember {
+            mutableStateOf("")
+        }
+
+        val scope = rememberCoroutineScope()
         Column(
             modifier = Modifier
-                .safeContentPadding()
                 .fillMaxSize(),
             horizontalAlignment = Alignment.CenterHorizontally,
+            verticalArrangement = Arrangement.spacedBy(16.dp, Alignment.CenterVertically)
         ) {
-            Button(onClick = { showContent = !showContent }) {
-                Text("Click me!")
+            TextField(
+                value = uncensoredText,
+                onValueChange = { uncensoredText = it },
+                modifier = Modifier
+                    .padding(horizontal = 16.dp)
+                    .fillMaxWidth(),
+                placeholder = {
+                    Text("Uncensored text")
+                }
+            )
+            Button(onClick = {
+                scope.launch {
+                    censorViewModel.getCensoredText(uncensoredText)
+                }
+            }) {
+                if (uiState is UiState.Loading) {
+                    CircularProgressIndicator(
+                        modifier = Modifier
+                            .size(15.dp),
+                        strokeWidth = 1.dp,
+                        color = Color.White
+                    )
+                } else {
+                    Text("Do Censor!")
+                }
             }
-            AnimatedVisibility(showContent) {
-                val greeting = remember { Greeting().greet() }
-                Column(Modifier.fillMaxWidth(), horizontalAlignment = Alignment.CenterHorizontally) {
-                    Image(painterResource(Res.drawable.compose_multiplatform), null)
-                    Text("Compose: $greeting")
+
+            when (uiState) {
+                is UiState.Loading -> {}
+                is UiState.Error -> Text((uiState as UiState.Error).message ?: "Null Error")
+                is UiState.Success -> Text((uiState as UiState.Success).data.result)
+                null -> {
                 }
             }
         }
