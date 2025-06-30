@@ -9,29 +9,35 @@ import io.ktor.util.network.UnresolvedAddressException
 import kotlinx.serialization.SerializationException
 
 interface ICensorRepository {
-    suspend fun getCensoredText(text: String) :Result<CensoredResponse>
+    suspend fun getCensoredText(text: String) : Result<String>
 }
 
 class CensorRepository(private val httpClient: HttpClient) : ICensorRepository {
 
-    override suspend fun getCensoredText(text: String) : Result<CensoredResponse> {
+    override suspend fun getCensoredText(text: String) : Result<String> {
 
         val response = try {
             httpClient.get(urlString = CENSOR_URL){
                 parameter("text", text)
             }
         } catch(e: UnresolvedAddressException) {
-            return Result.failure<CensoredResponse>(e)
+            return Result.failure<String>(e)
         } catch(e: SerializationException) {
-            return Result.failure<CensoredResponse>(e)
+            return Result.failure<String>(e)
         } catch (e: Exception){
-            return Result.failure<CensoredResponse>(e)
+            return Result.failure<String>(e)
         }
 
-        return Result.success(response.body<CensoredResponse>())
-
         return when(response.status.value){
-            in 200..299 -> Result.success(response.body<CensoredResponse>())
+            in 200..299 -> {
+                val resp = response.body<CensoredResponse>()
+                if(!resp.result.isNullOrEmpty()){
+                    Result.success(resp.result)
+                }else if (!resp.error.isNullOrEmpty()){
+                    Result.failure(Exception(resp.error))
+                }else
+                    Result.failure(NullPointerException())
+            }
             401 -> Result.failure(Exception("UNAUTHORIZED"))
             409 -> Result.failure(Exception("CONFLICT"))
             408 -> Result.failure(Exception("REQUEST_TIMEOUT"))

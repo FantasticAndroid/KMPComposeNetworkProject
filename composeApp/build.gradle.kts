@@ -1,3 +1,4 @@
+import org.jetbrains.compose.ComposePlugin.DesktopDependencies.common
 import org.jetbrains.compose.desktop.application.dsl.TargetFormat
 import org.jetbrains.kotlin.gradle.ExperimentalKotlinGradlePluginApi
 import org.jetbrains.kotlin.gradle.dsl.JvmTarget
@@ -39,6 +40,8 @@ kotlin {
             implementation(compose.preview)
             implementation(libs.androidx.activity.compose)
             implementation(libs.ktor.client.okhttp)
+
+            implementation(libs.bundles.koin.android)
         }
         commonMain.dependencies {
             implementation(compose.runtime)
@@ -51,7 +54,11 @@ kotlin {
             implementation(libs.androidx.lifecycle.viewmodel.compose)
             implementation(libs.androidx.lifecycle.runtimeCompose)
 
-            implementation(libs.bundles.ktorCommon)
+            implementation(libs.bundles.ktor.common)
+
+            ////implementation(platform(libs.koin.bom))
+            api(libs.koin.core)
+            implementation(libs.bundles.koin.common.compose)
         }
         commonTest.dependencies {
             implementation(libs.kotlin.test)

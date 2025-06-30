@@ -16,17 +16,19 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
-import androidx.lifecycle.viewmodel.compose.viewModel
 import org.jetbrains.compose.ui.tooling.preview.Preview
 
 import kotlinx.coroutines.launch
+import org.koin.compose.viewmodel.koinViewModel
 
 @Composable
 @Preview
 fun App() {
-    val censorViewModel = viewModel{
+    /*val censorViewModel = viewModel{
         CensorViewModel()
-    }
+    }*/
+
+    val censorViewModel  : CensorViewModel = koinViewModel()
     MaterialTheme {
 
         val uiState by censorViewModel.uiState
@@ -71,7 +73,7 @@ fun App() {
             when (uiState) {
                 is UiState.Loading -> {}
                 is UiState.Error -> Text((uiState as UiState.Error).message ?: "Null Error")
-                is UiState.Success -> Text((uiState as UiState.Success).data.result)
+                is UiState.Success -> Text((uiState as UiState.Success).data)
                 null -> {
                 }
             }
