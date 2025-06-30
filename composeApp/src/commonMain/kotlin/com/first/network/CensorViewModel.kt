@@ -3,12 +3,9 @@ package com.first.network
 import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.first.network.client.createHttpClient
 import kotlinx.coroutines.launch
 
-class CensorViewModel() : ViewModel() {
-
-    private val censorUseCase: CensorUseCase = CensorUseCase(CensorRepository(createHttpClient(getNetworkEngine())))
+class CensorViewModel(private val censorUseCase: CensorUseCase) : ViewModel() {
 
     val uiState = mutableStateOf<UiState?>(null)
 
