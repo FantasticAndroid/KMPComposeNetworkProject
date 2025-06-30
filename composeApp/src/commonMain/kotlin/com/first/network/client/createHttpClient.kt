@@ -10,6 +10,7 @@ import io.ktor.client.plugins.defaultRequest
 import io.ktor.client.plugins.logging.LogLevel
 import io.ktor.client.plugins.logging.Logger
 import io.ktor.client.plugins.logging.Logging
+import io.ktor.client.plugins.logging.SIMPLE
 import io.ktor.client.request.header
 import io.ktor.http.ContentType
 import io.ktor.http.URLProtocol
@@ -35,6 +36,7 @@ fun createHttpClient(engine: HttpClientEngine) : HttpClient = HttpClient(engine)
     }
     install(Logging){
         level = LogLevel.ALL
+        logger = Logger.SIMPLE
         // To redirect logs to other logger lib only
         /*logger = object : Logger{
             override fun log(message: String) {

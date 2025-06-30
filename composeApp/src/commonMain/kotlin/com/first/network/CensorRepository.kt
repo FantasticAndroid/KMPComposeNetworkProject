@@ -1,7 +1,6 @@
 package com.first.network
 
 import com.first.network.client.CENSOR_URL
-import com.first.network.client.createHttpClient
 import io.ktor.client.HttpClient
 import io.ktor.client.call.body
 import io.ktor.client.request.get
@@ -13,9 +12,7 @@ interface ICensorRepository {
     suspend fun getCensoredText(text: String) : Result<String>
 }
 
-class CensorRepository() : ICensorRepository {
-
-    private val httpClient : HttpClient = createHttpClient(getNetworkEngine())
+class CensorRepository(private val httpClient : HttpClient) : ICensorRepository {
 
     override suspend fun getCensoredText(text: String) : Result<String> {
 
