@@ -2,6 +2,7 @@ package com.first.network
 
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
@@ -15,6 +16,7 @@ import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import org.jetbrains.compose.ui.tooling.preview.Preview
 
@@ -31,6 +33,9 @@ fun App() {
     val censorViewModel  : CensorViewModel = koinViewModel()
     MaterialTheme {
 
+        // Read if any previous censor text available in datastore (Datastore read)
+        val censorData by censorViewModel.censorData.collectAsState(initial = "")
+
         val uiState by censorViewModel.uiState
         var uncensoredText by remember {
             mutableStateOf("")
@@ -43,6 +48,8 @@ fun App() {
             horizontalAlignment = Alignment.CenterHorizontally,
             verticalArrangement = Arrangement.spacedBy(16.dp, Alignment.CenterVertically)
         ) {
+            Text("Last Censored Text: $censorData")
+
             TextField(
                 value = uncensoredText,
                 onValueChange = { uncensoredText = it },
@@ -77,6 +84,8 @@ fun App() {
                 null -> {
                 }
             }
+
+            Text(text = "Platform: ${getPlatform().name}")
         }
     }
 }

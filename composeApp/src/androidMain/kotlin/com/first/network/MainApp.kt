@@ -8,6 +8,8 @@ class MainApp : Application(){
 
     override fun onCreate() {
         super.onCreate()
+        // Init AppContext and bind Context in it (Statically)
+        AppContext.init(this.applicationContext)
         initKoin{
             androidContext(this@MainApp)
         }

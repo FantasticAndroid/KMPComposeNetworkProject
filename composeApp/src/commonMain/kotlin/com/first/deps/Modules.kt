@@ -1,5 +1,6 @@
 package com.first.deps
 
+import com.first.datastore.pref.createDataStorePref
 import com.first.network.CensorRepository
 import com.first.network.CensorUseCase
 import com.first.network.CensorViewModel
@@ -15,6 +16,8 @@ val sharedModule = module {
     single { CensorRepository(get()) }.bind<ICensorRepository>()
     single { CensorUseCase(get()) }
     viewModelOf(::CensorViewModel)
+    // Make DataStore<preference> Injectable
+    single { createDataStorePref() }
 }
 
 //expect val platformModule: Module

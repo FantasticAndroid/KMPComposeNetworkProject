@@ -59,6 +59,9 @@ kotlin {
             ////implementation(platform(libs.koin.bom))
             api(libs.koin.core)
             implementation(libs.bundles.koin.common.compose)
+
+            implementation(libs.datastore)
+            implementation(libs.datastore.preference)
         }
         commonTest.dependencies {
             implementation(libs.kotlin.test)
