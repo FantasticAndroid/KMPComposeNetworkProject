@@ -115,6 +115,7 @@ compose.desktop {
         mainClass = "com.first.network.MainKt"
 
         nativeDistributions {
+            // run (./gradlew packageDmg) command to create DMG package for MAC
             targetFormats(TargetFormat.Dmg, TargetFormat.Msi, TargetFormat.Deb)
             packageName = "com.first.network"
             packageVersion = "1.0.0"

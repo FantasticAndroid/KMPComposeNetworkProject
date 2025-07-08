@@ -34,7 +34,7 @@ fun App() {
     MaterialTheme {
 
         // Read if any previous censor text available in datastore (Datastore read)
-        val censorData by censorViewModel.censorData.collectAsState(initial = "")
+        val censorStoredData by censorViewModel.censorStoredData.collectAsState(initial = "")
 
         val uiState by censorViewModel.uiState
         var uncensoredText by remember {
@@ -48,7 +48,7 @@ fun App() {
             horizontalAlignment = Alignment.CenterHorizontally,
             verticalArrangement = Arrangement.spacedBy(16.dp, Alignment.CenterVertically)
         ) {
-            Text("Last Censored Text: $censorData")
+            Text("Last Censored Text: $censorStoredData")
 
             TextField(
                 value = uncensoredText,

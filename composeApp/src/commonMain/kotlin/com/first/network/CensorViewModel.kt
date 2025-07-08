@@ -15,7 +15,7 @@ private val PREF_KEY_CENSOR_DATA = stringPreferencesKey("censor_data")
 class CensorViewModel(private val censorUseCase: CensorUseCase, private val dataStore : DataStore<Preferences>) : ViewModel() {
 
     val uiState = mutableStateOf<UiState?>(null)
-    val censorData = dataStore.data
+    val censorStoredData = dataStore.data
         .map {
             it[PREF_KEY_CENSOR_DATA] ?: ""
         }
