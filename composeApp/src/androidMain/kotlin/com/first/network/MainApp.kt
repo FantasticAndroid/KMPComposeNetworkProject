@@ -13,5 +13,8 @@ class MainApp : Application(){
         initKoin{
             androidContext(this@MainApp)
         }
+        /*Kermit.init {
+            addLogWriter(AndroidLogWriter(LogSeverity.Debug))
+        }*/
     }
 }

@@ -19,6 +19,9 @@ kotlinx-coroutines = "1.10.2"
 ktor = "3.1.3"  # 3.2.0 if thi is have an error : Space characters in SimpleName 'use streaming syntax' are not allowed prior to DEX version 040
 koin-bom = "4.1.0"
 datastore = "1.1.7"
+calf= "0.8.0"
+coil = "3.2.0"
+kermitlog = "2.0.4"
 
 [libraries]
 kotlin-test = { module = "org.jetbrains.kotlin:kotlin-test", version.ref = "kotlin" }
@@ -58,6 +61,14 @@ koin-androidx-compose = {module = "io.insert-koin:koin-androidx-compose", versio
 datastore = { module = "androidx.datastore:datastore", version.ref = "datastore"}
 datastore-preference = { module = "androidx.datastore:datastore-preferences", version.ref = "datastore"}
 
+calf-permission = { group = "com.mohamedrejeb.calf",  name = "calf-permissions", version.ref = "calf" }
+calf-file-picker = { group = "com.mohamedrejeb.calf",  name = "calf-file-picker", version.ref = "calf" }
+calf-camera-picker = { group = "com.mohamedrejeb.calf",  name = "calf-camera-picker", version.ref = "calf" }
+calf-file-picker-coil = { group = "com.mohamedrejeb.calf",  name = "calf-file-picker-coil", version.ref = "calf" }
+
+coil-compose = { module = "io.coil-kt.coil3:coil-compose", version.ref = "coil" }
+kermit-log = { module = "co.touchlab:kermit", version.ref = "kermitlog"}
+
 [plugins]
 androidApplication = { id = "com.android.application", version.ref = "agp" }
 androidLibrary = { id = "com.android.library", version.ref = "agp" }
@@ -72,3 +83,4 @@ kotlin-serialization = { id = "org.jetbrains.kotlin.plugin.serialization", versi
 ktor-common = [ "ktor-client-core", "ktor-client-content-negotiation", "ktor-serialization-kotlinx-json", "ktor-client-logging", "ktor-client-auth" ]
 koin-common-compose = ["koin-compose", "koin-compose-viewmodel", "koin-compose-viewmodel-navigation"]
 koin-android = ["koin-android", "koin-androidx-compose"]
+calf = ["calf-permission", "calf-file-picker", "calf-camera-picker" , "calf-file-picker-coil"]

@@ -27,3 +27,7 @@ actual fun getDataStorePrefPath() : String = dataStoreFileName
 actual object AppContext {
     actual fun get() : Any = Any()
 }
+
+actual fun SettingsLauncher.Handle() {
+
+}

@@ -62,6 +62,13 @@ kotlin {
 
             implementation(libs.datastore)
             implementation(libs.datastore.preference)
+
+            implementation(libs.bundles.calf)
+
+            implementation(libs.coil.compose)
+
+            api(libs.kermit.log)
+
         }
         commonTest.dependencies {
             implementation(libs.kotlin.test)

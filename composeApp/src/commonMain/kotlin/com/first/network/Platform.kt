@@ -1,5 +1,7 @@
 package com.first.network
 
+import androidx.compose.runtime.*
+import androidx.compose.runtime.mutableStateOf
 import io.ktor.client.engine.HttpClientEngine
 
 interface Platform {
@@ -21,3 +23,10 @@ expect object AppContext {
  * @return String
  */
 expect fun getDataStorePrefPath() : String
+
+class SettingsLauncher {
+    internal var requestSettings by mutableStateOf(false)
+    fun open() { requestSettings = true }
+}
+
+expect fun SettingsLauncher.Handle()
